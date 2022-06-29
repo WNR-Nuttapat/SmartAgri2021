@@ -30,10 +30,10 @@ if __name__ == "__main__":
     #odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
     pub_vel = rospy.Publisher('cmd_vel',Twist,queue_size=10)
 
-    time.sleep(1)
-
     curr_time=rospy.Time.now()
-    prev_time=rospy.Time.now()
+    prev_time=0
+   
+    time.sleep(1)
     
     rate = rospy.Rate(100)
 
@@ -58,9 +58,6 @@ if __name__ == "__main__":
 
         # print(DATA)
         ser.write(bytes(DATA,'utf-8')) #Sent DATA to Arduino
-
-        
-        curr_time=rospy.Time.now()
         
         ## DataRecieving ##    
         Response=getValues()        ##Get DATA from Arduino
@@ -68,8 +65,10 @@ if __name__ == "__main__":
         stringData=stringData.split(',')    ##Split into 2 string
         # print(stringData)
         
+        curr_time=rospy.Time.now()
+        
         data=[]  
-        if len(stringData)==2:
+        if len(stringData)==2 and stringData[0][0]=='A' and stringData[1][0]=='B':
             Right_tick=int(stringData[0][1:])
             Left_tick=int(stringData[1][1:])
     
