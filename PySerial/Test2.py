@@ -25,17 +25,21 @@ def getValues():
 if __name__ == "__main__":
     
     ser = serial.Serial('/dev/ttyUSB0', baudrate = 115200, timeout = 1)
-    rospy.init_node('read_ser', anonymous=True)
+    #rospy.init_node('read_ser', anonymous=True)
     pub = rospy.Publisher('serial_read', UInt32, queue_size=10)
     #odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
     pub_vel = rospy.Publisher('cmd_vel',Twist,queue_size=10)
+    rospy.init_node('drive_turtlebot',anonymous=True)
+    move = Twist()
 
     curr_time=rospy.Time.now()
-    prev_time=0
+    prev_time=rospy.Time.now()
    
     time.sleep(1)
     
     rate = rospy.Rate(100)
+
+    rospy.sleep(0.005)
 
     while not rospy.is_shutdown():
 
@@ -92,12 +96,16 @@ if __name__ == "__main__":
             print(omega)  
             prev_right_tick=Right_tick
             prev_left_tick=Left_tick
-            prev_time=curr_time        
+            prev_time=curr_time    
+    
+            move.linear.x = vc
+            move.angular.z = omega
+
 
         if data:
             rospy.loginfo(data)
-            pub.publish(data)
-            #pub_vel.publish(data)
+            #pub.publish(data)
+            pub_vel.publish(move)
 
         prev_time=curr_time
         time.sleep(0.00001)
