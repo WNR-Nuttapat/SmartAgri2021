@@ -1,8 +1,8 @@
 import serial
 import time
 
-SER4 = serial.Serial('COM7', baudrate = 1000000, timeout = 1) #
-SER5 = serial.Serial('COM12', baudrate = 9600, timeout = 1)
+SER4 = serial.Serial('COM7', baudrate = 1000000, timeout = 1) #Gyro
+SER5 = serial.Serial('COM12', baudrate = 9600, timeout = 1) #GPS
 
 time.sleep(1)
 
