@@ -21,8 +21,12 @@ wheelradius=0.0735
 def getTheta(v,w):
     a = []
     b = []
+    
     for i in range(len(x)):
-        angle=math.atan(y[i]/(v/w - x[i]))
+        if w!=0:
+            angle=math.atan(y[i]/(v/w - x[i]))
+        else:
+            angle=0
         a.append(angle)
         b.append(angle*180/math.pi)
     
@@ -32,9 +36,12 @@ def getVelocity(v,w):
     a = []
     b = []
     for i in range(len(x)):
-        v=w*math.sqrt(math.pow(v/w - x[i],2) + math.pow(y[i],2))
-        a.append(v)
-        b.append(v*60/(2*math.pi*wheelradius))
+        if w!=0:
+            vel=w*math.sqrt(math.pow(v/w - x[i],2) + math.pow(y[i],2))
+        else:
+            vel=v
+        a.append(vel)
+        b.append(vel*60/(2*math.pi*wheelradius))
 
     return b
 
