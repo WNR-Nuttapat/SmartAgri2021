@@ -1,3 +1,5 @@
+//Get data from Gyroscope and Accelerometer using MPU9250 Module
+
 #include <Wire.h>
 
 #define CALIBRATION_NUMBER 1000
